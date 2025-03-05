@@ -1,7 +1,9 @@
 {
     "name": "kaisa",
+    "type": "module",
     "verison": "0",
     "dependencies": {
-        "express": "*"
+        "express": "*",
+        "openai": "*"
     }
 }

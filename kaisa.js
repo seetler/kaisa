@@ -2,9 +2,10 @@
 
 const express = require("express")
 const path = require("path")
+const key = require("./keys.js")
 
 const e = express();
-const port = 4889;
+const port = key.portof;
 
 e.use(express.static(path.join(__dirname, "public")))
 

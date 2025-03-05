@@ -1,5 +1,5 @@
 {
-    "name": "Kaisa",
+    "name": "kaisa",
     "verison": "0",
     "dependencies": {
         "express": "*"

@@ -12,19 +12,38 @@ import * as keys from "./keys.js";
 const e = express();
 const port = keys.portof;
 const key = keys.keyof;
-const ccai=  new OpenAI({apiKey: keys.keyof});
+const openai=  new OpenAI({apiKey: keys.keyof});
 
-const completion = await ccai.chat.completions.create({
-    model:"gpt-4o-mini",
-    messages: [
-        {
-            role: "user",
-            content: "tell me a haiku"
-        }
-    ]
-})
 
-console.log(completion.choices[0].message);
+const thread = await openai.beta.threads.create();
+
+const m2 = await openai.beta.threads.messages.create(
+    thread.id,
+    {
+      role: "user",
+      content: "tell me about how to start a business in sonoma"
+    }
+  );
+
+
+  let run = await openai.beta.threads.runs.createAndPoll(
+    thread.id,
+    { 
+      assistant_id: "asst_cVysiYZvcd0ZGTuxZ2gFv2vP",
+
+    }
+  );
+
+  if (run.status === 'completed') {
+    const messages = await openai.beta.threads.messages.list(
+      run.thread_id
+    );
+    for (const message of messages.data.reverse()) {
+      console.log(`${message.role} > ${message.content[0].text.value}`);
+    }
+  } else {
+    console.log(run.status);
+  }
 
 
 // e.use(express.static(path.join(__dirname, "public")))
